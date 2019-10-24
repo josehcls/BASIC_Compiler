@@ -1,14 +1,13 @@
-﻿namespace BASIC_Compiler
+﻿using System;
+using System.Collections.Generic;
+
+namespace BASIC_Compiler
 {
-    public interface SeletorRotinas
+    public abstract class SeletorRotinas
     {
+        public Dictionary<string, Func<Evento, SaidaRotina>> Rotinas;
 
-        // TODO: Eventos de Saida Internos e Externos
-        // TODO: Fila Normal x Prioritaria
-        public List<Evento> ProcessarEvento (Evento evento)
-        {
-
-        }
+        public abstract SaidaRotina ProcessarEvento (Evento evento);
 
     }
 }
