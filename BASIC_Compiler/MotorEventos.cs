@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BASIC_Compiler
-{
-    public class MotorEventos
-    {
-        public Evento EventoCorrente { get; set; }
+namespace BASIC_Compiler { public class MotorEventos { public Evento EventoCorrente { get; set; }
         public List<Evento> Eventos { get; set; }
         public List<Evento> EventosPrioritarios { get; set; }
         public int InstanteExecucao { get; set; }
@@ -27,17 +23,30 @@ namespace BASIC_Compiler
 
         public void Inicializar(List<Evento> eventosIniciais)
         {
-
+            Eventos = new List<Evento>();
+            Eventos.AddRange(eventosIniciais);
         }
 
         public Evento ExtrairProximoEvento()
         {
-
+            Evento proximoEvento = null;
+            if (EventosPrioritarios.Count > 0)
+            {
+                proximoEvento = EventosPrioritarios[0];
+                EventosPrioritarios.RemoveAt(0);
+            }
+            else if (Eventos.Count > 0)
+            {
+                proximoEvento = Eventos[0];
+                Eventos.RemoveAt(0);
+            }
+            return proximoEvento;
         }
 
         public string Finalizar()
         {
-
+            // TODO: Relatório de Execução
+            return "";
         }
 
         public void ProcessarEvento(Evento evento)
@@ -58,9 +67,19 @@ namespace BASIC_Compiler
             FilaSaida.Add(evento);
         }
 
-        public void Rodar()
+        public bool Rodar()
         {
-
+            Evento evento = ExtrairProximoEvento();
+            if (evento != null)
+            {
+                InstanteExecucao = evento.InstanteProgramado;
+                ProcessarEvento(evento);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

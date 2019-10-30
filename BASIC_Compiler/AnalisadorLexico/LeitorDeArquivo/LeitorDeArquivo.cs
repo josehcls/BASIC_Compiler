@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace BASIC_Compiler.AnalisadorLexico.NivelUm
+namespace BASIC_Compiler.AnalisadorLexico.LeitorDeArquivo
 {
     public class LeitorDeArquivo : SeletorRotinas
     {
@@ -13,12 +13,6 @@ namespace BASIC_Compiler.AnalisadorLexico.NivelUm
         {
             Rotinas.Add("ARQUIVO", new Func<Evento, SaidaRotina>(AbrirArquivo));
             Rotinas.Add("LER_ARQUIVO", new Func<Evento, SaidaRotina>(LerArquivo));
-        }
-
-        override
-        public SaidaRotina ProcessarEvento(Evento evento)
-        {
-            return Rotinas[evento.Tipo](evento);
         }
 
         /// <summary>
@@ -33,9 +27,9 @@ namespace BASIC_Compiler.AnalisadorLexico.NivelUm
             // Evento Prioritario Ler Linha
             Arquivo = new StreamReader(evento.Conteudo.ToString());
             return new SaidaRotina(
-                null, 
-                new List<Evento>{new Evento(evento.InstanteProgramado+1, "LER_ARQUIVO", evento.Tarefa, Arquivo)}, 
-                null
+                new List<Evento>(),
+                new List<Evento> { new Evento(evento.InstanteProgramado + 1, "LER_ARQUIVO", evento.Tarefa, Arquivo) },
+                new List<Evento>()
             );
         }
 
@@ -55,16 +49,17 @@ namespace BASIC_Compiler.AnalisadorLexico.NivelUm
             {
                 string linha = streamReader.ReadLine();
                 return new SaidaRotina(
-                    null, 
-                    new List<Evento>{new Evento(evento.InstanteProgramado+1, "LER_ARQUIVO", evento.Tarefa, streamReader)}, 
-                    new List<Evento>{new Evento(evento.InstanteProgramado+1, "ASCII", evento.Tarefa, linha)}
+                    new List<Evento>(),
+                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, "LER_ARQUIVO", evento.Tarefa, streamReader) },
+                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, "ASCII", evento.Tarefa, linha) }
                 );
-            } else //EOF
+            }
+            else //EOF
             {
                 streamReader.Close();
                 return new SaidaRotina(
-                    null,
-                    null,
+                    new List<Evento>(),
+                    new List<Evento>(),
                     new List<Evento> { new Evento(evento.InstanteProgramado + 1, "EOF", evento.Tarefa, null) }
                 );
             }

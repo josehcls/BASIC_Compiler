@@ -10,9 +10,9 @@ namespace BASIC_Compiler
         public List<Evento> EventosPrioritarios {get; set;}
         public List<Evento> EventosExternos {get; set;}
 
-        public SaidaRotina(List<Evento> enventosInternos, List<Evento> eventosPrioritarios, List<Evento> eventosExternos)
+        public SaidaRotina(List<Evento> eventosInternos, List<Evento> eventosPrioritarios, List<Evento> eventosExternos)
         {
-            EventosInternos = eventosExternos;
+            EventosInternos = eventosInternos;
             EventosPrioritarios = eventosPrioritarios;
             EventosExternos = eventosExternos;
         }

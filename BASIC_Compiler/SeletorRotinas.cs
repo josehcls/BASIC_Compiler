@@ -7,7 +7,15 @@ namespace BASIC_Compiler
     {
         public Dictionary<string, Func<Evento, SaidaRotina>> Rotinas;
 
-        public abstract SaidaRotina ProcessarEvento (Evento evento);
+        public SeletorRotinas()
+        {
+            Rotinas = new Dictionary<string, Func<Evento, SaidaRotina>>();
+        }
+
+        public SaidaRotina ProcessarEvento(Evento evento)
+        {
+            return Rotinas[evento.Tipo](evento);
+        }
 
     }
 }

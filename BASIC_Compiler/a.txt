@@ -1,0 +1,8 @@
+﻿int AB23, X;
+X:=200; AB23:=0;
+LOOP: AB23:=AB23+X;
+PRINT X, AB23;
+X:=X-1;
+IF X=0 STOP;
+GO TO LOOP
+
