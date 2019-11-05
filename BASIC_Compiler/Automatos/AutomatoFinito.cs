@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,15 +12,23 @@ namespace BASIC_Compiler.Automatos
         public List<Transicao> Transicoes { get; set; }
         public List<string> EstadosFinais { get; set; }
 
-        public static AutomatoFinito LeituraDispositivo(string path)
+        public AutomatoFinito (string path)
         {
-            //var json = System.IO.File.ReadAllText(path);
-            ////Console.WriteLine(json);
+            var json = System.IO.File.ReadAllText(path);
 
-            //AutomatoFinito automato = JsonConvert.DeserializeObject<AutomatoFinito>(json);
+            AutomatoFinito automato = JsonConvert.DeserializeObject<AutomatoFinito>(json);
 
-            //return automato;
-            throw new NotImplementedException();
+            Estados = automato.Estados;
+            EstadoInicial = automato.EstadoInicial;
+            Transicoes = automato.Transicoes;
+            EstadosFinais = automato.EstadosFinais;
+        }
+
+        public Cabecote Simulacao(LinkedList<string> fita)
+        {
+            Cabecote cabecote = new Cabecote(fita);
+            Simulacao(cabecote);
+            return cabecote;
         }
 
         public void Simulacao(Cabecote cabecote)
@@ -51,6 +60,10 @@ namespace BASIC_Compiler.Automatos
                             {
                                 cabecote.Aceito = true;
                             }
+                        }
+                        else
+                        {
+                            cabecote.Erro = true;
                         }
                     }
                     else

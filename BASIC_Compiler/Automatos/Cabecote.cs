@@ -10,8 +10,9 @@ namespace BASIC_Compiler.Automatos
         public bool Aceito { get; set; }
         public bool Erro { get; set; }
 
-        public Cabecote()
+        public Cabecote(LinkedList<string> fita)
         {
+            Fita = fita;
             Aceito = false;
             Erro = false;
         }
