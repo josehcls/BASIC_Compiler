@@ -12,17 +12,17 @@ namespace BASIC_Compiler.Automatos
         public List<Transicao> Transicoes { get; set; }
         public List<string> EstadosFinais { get; set; }
 
-        public AutomatoFinito (string path)
-        {
-            var json = System.IO.File.ReadAllText(path);
+        //public AutomatoFinito (string path)
+        //{
+        //    var json = System.IO.File.ReadAllText(path);
 
-            AutomatoFinito automato = JsonConvert.DeserializeObject<AutomatoFinito>(json);
+        //    AutomatoFinito automato = JsonConvert.DeserializeObject<AutomatoFinito>(json);
 
-            Estados = automato.Estados;
-            EstadoInicial = automato.EstadoInicial;
-            Transicoes = automato.Transicoes;
-            EstadosFinais = automato.EstadosFinais;
-        }
+        //    Estados = automato.Estados;
+        //    EstadoInicial = automato.EstadoInicial;
+        //    Transicoes = automato.Transicoes;
+        //    EstadosFinais = automato.EstadosFinais;
+        //}
 
         public Cabecote Simulacao(LinkedList<string> fita)
         {
@@ -31,18 +31,18 @@ namespace BASIC_Compiler.Automatos
             return cabecote;
         }
 
-        public void Simulacao(Cabecote cabecote)
+        public void Passo(Cabecote cabecote)
         {
             if (cabecote.EstadoAtual == null)
             {
                 PartidaInicial(cabecote);
-                Simulacao(cabecote);
+                //Simulacao(cabecote);
             }
             else
             {
                 string simbolo = cabecote.PosicaoAtual.Value;
 
-                if (simbolo == "#" && ConfereEstadoFinal(cabecote))
+                if (simbolo == null && ConfereEstadoFinal(cabecote))
                 {
                     cabecote.Aceito = true;
                 }
@@ -54,7 +54,7 @@ namespace BASIC_Compiler.Automatos
                     var posicao = cabecote.PosicaoAtual;
                     if (!transicoes.Any())
                     {
-                        if (simbolo == "#")
+                        if (simbolo == null)
                         {
                             if (ConfereEstadoFinal(cabecote))
                             {
@@ -77,8 +77,8 @@ namespace BASIC_Compiler.Automatos
                                 cabecote.PosicaoAtual = posicao;
                                 RealizaTransicao(cabecote, transicao);
                                 // Move Cabeçote para a Direita, caso a transição não tenha sido em vazio
-                                if (transicao.Simbolo != " ") cabecote.MoveParaDireita();
-                                Simulacao(cabecote);
+                                if (transicao.Simbolo != "") cabecote.MoveParaDireita();
+                                //Simulacao(cabecote);
                             }
                         }
                     }
