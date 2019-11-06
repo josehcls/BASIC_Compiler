@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace BASIC_Compiler.Automatos
@@ -12,100 +10,16 @@ namespace BASIC_Compiler.Automatos
         public List<Transicao> Transicoes { get; set; }
         public List<string> EstadosFinais { get; set; }
 
-        //public AutomatoFinito (string path)
-        //{
-        //    var json = System.IO.File.ReadAllText(path);
-
-        //    AutomatoFinito automato = JsonConvert.DeserializeObject<AutomatoFinito>(json);
-
-        //    Estados = automato.Estados;
-        //    EstadoInicial = automato.EstadoInicial;
-        //    Transicoes = automato.Transicoes;
-        //    EstadosFinais = automato.EstadosFinais;
-        //}
-
-        public Cabecote Simulacao(LinkedList<string> fita)
+        public Transicao BuscaTransicao(string estadoAtual, string simbolo)
         {
-            Cabecote cabecote = new Cabecote(fita);
-            Simulacao(cabecote);
-            return cabecote;
+            return Transicoes.Where(t => t.Origem == estadoAtual && t.Simbolo == simbolo).SingleOrDefault();
         }
 
-        public void Passo(Cabecote cabecote)
+        public bool ConfereEstadoFinal(string estado)
         {
-            if (cabecote.EstadoAtual == null)
-            {
-                PartidaInicial(cabecote);
-                //Simulacao(cabecote);
-            }
-            else
-            {
-                string simbolo = cabecote.PosicaoAtual.Value;
-
-                if (simbolo == null && ConfereEstadoFinal(cabecote))
-                {
-                    cabecote.Aceito = true;
-                }
-                else
-                {
-                    var estadoAtual = cabecote.EstadoAtual;
-                    var transicoes = BuscaTransicoes(estadoAtual, simbolo);
-                    // Salva posição atual para o caso de mais de uma transição
-                    var posicao = cabecote.PosicaoAtual;
-                    if (!transicoes.Any())
-                    {
-                        if (simbolo == null)
-                        {
-                            if (ConfereEstadoFinal(cabecote))
-                            {
-                                cabecote.Aceito = true;
-                            }
-                        }
-                        else
-                        {
-                            cabecote.Erro = true;
-                        }
-                    }
-                    else
-                    {
-                        foreach (var transicao in transicoes)
-                        {
-                            // Ignora transição caso a entrada já tenha sido aceita
-                            if (!cabecote.Aceito)
-                            {
-                                // Volta posição para o caso de mais de uma transição
-                                cabecote.PosicaoAtual = posicao;
-                                RealizaTransicao(cabecote, transicao);
-                                // Move Cabeçote para a Direita, caso a transição não tenha sido em vazio
-                                if (transicao.Simbolo != "") cabecote.MoveParaDireita();
-                                //Simulacao(cabecote);
-                            }
-                        }
-                    }
-                }
-            }
+            return EstadosFinais.Contains(estado);
         }
 
-        void PartidaInicial(Cabecote cabecote)
-        {
-            cabecote.PosicaoAtual = cabecote.Fita.First;
-            cabecote.EstadoAtual = EstadoInicial;
-        }
-
-        List<Transicao> BuscaTransicoes(string estadoAtual, string simbolo)
-        {
-            return Transicoes.Where(t => t.Origem == estadoAtual && (t.Simbolo == simbolo || t.Simbolo == "")).ToList();
-        }
-
-        bool ConfereEstadoFinal(Cabecote cabecote)
-        {
-            return EstadosFinais.Contains(cabecote.EstadoAtual);
-        }
-
-        static void RealizaTransicao(Cabecote cabecote, Transicao transicao)
-        {
-            cabecote.EstadoAtual = transicao.Destino;
-        }
     }
     public class Transicao
     {

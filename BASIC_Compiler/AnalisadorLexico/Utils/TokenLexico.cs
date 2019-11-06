@@ -6,7 +6,7 @@ namespace BASIC_Compiler.AnalisadorLexico.Utils
 {
     public class TokenLexico
     {
-        public string valor { get; set; }
+        public string Valor { get; set; }
         public string Tipo { get; set; }
     }
 }

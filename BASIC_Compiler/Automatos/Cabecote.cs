@@ -1,25 +1,14 @@
-﻿using System.Collections.Generic;
-
-namespace BASIC_Compiler.Automatos
+﻿namespace BASIC_Compiler.Automatos
 {
     public class Cabecote
     {
-        public LinkedList<string> Fita { get; set; }
-        public LinkedListNode<string> PosicaoAtual { get; set; }
         public string EstadoAtual { get; set; }
         public bool Aceito { get; set; }
-        public bool Erro { get; set; }
 
-        public Cabecote(LinkedList<string> fita)
+        public Cabecote(string estadoInicial)
         {
-            Fita = fita;
+            EstadoAtual = estadoInicial;
             Aceito = false;
-            Erro = false;
-        }
-
-        public void MoveParaDireita()
-        {
-            PosicaoAtual = PosicaoAtual.Next;
         }
     }
 }
