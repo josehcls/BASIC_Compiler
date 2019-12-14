@@ -23,7 +23,7 @@ namespace BASIC_Compiler
             while(motorExtratorTokens.Rodar()) {}
 
             //filaFinal.ForEach(ev => Console.WriteLine(ev.Tipo + " - " + (ev.Tipo == "EOF" ? "EOF" : ( ((CaracterClassificado)ev.Conteudo).Caracter) + " " + ((CaracterClassificado)ev.Conteudo).Funcao + " " + ((CaracterClassificado)ev.Conteudo).Tipo ) ) );
-            filaFinal.ForEach(ev => Console.WriteLine(ev.Tipo + " - " + (ev.Tipo == TipoEvento.EOF ? "EOF" : ( ((TokenLexico)ev.Conteudo).Tipo) + " " + ((TokenLexico)ev.Conteudo).Valor)));
+            filaFinal.ForEach(ev => Console.WriteLine(ev.Tipo + " - " + (ev.Tipo == TipoEvento.EOF ? "EOF" : ((TokenLexico)ev.Conteudo).Categoria + " " + ((TokenLexico)ev.Conteudo).Valor)));
 
             Console.ReadKey();
         }

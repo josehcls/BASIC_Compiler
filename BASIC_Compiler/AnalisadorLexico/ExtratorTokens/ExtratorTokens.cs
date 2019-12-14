@@ -64,7 +64,7 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                     return new SaidaRotina(
                         new List<Evento>(),
                         new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null), new Evento(evento.InstanteProgramado + 2, TipoEvento.ASCII, evento.Tarefa, evento.Conteudo) },
-                        new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.TOKEN_LEXICO, evento.Tarefa, GetToken()) }
+                        new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.TOKEN_LEXICO, evento.Tarefa, GetTokenLexicoFromEstadoAtual()) }
                     );
                 }
                 else
@@ -131,40 +131,41 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
             };
         }
 
-        TokenLexico GetToken()
+        TokenLexico GetTokenLexicoFromEstadoAtual()
         {
-            return new TokenLexico()
-            {
-                Valor = string.Concat(Acumulador.Select(cc => cc.Caracter)),
-                Tipo = GetTipoTokenLexicoFromEstadoAtual()
-            };
-        }
-
-        TipoTokenLexico GetTipoTokenLexicoFromEstadoAtual()
-        {
+            string valor = string.Concat(Acumulador.Select(cc => cc.Caracter));
             TipoTokenLexico tipo = TipoTokenLexico.NA;
+            CategoriaTokenLexico categoria = CategoriaTokenLexico.NA;
+
             switch (Cabecote.EstadoAtual)
             {
                 case "ESPECIAL":
                     tipo = TipoTokenLexico.ESPECIAL;
+                    categoria = TokenLexico.CategorizarEspecial(valor);
                     break;
                 case "IDENTIFICADOR":
                     tipo = TipoTokenLexico.IDENTIFICADOR;
+                    categoria = TokenLexico.CategorizarIdentificador(valor);
                     break;
                 case "INTEIRO":
-                    tipo = TipoTokenLexico.NUMERO_INTEIRO;
+                    tipo = TipoTokenLexico.NUMERO;
+                    categoria = CategoriaTokenLexico.NUMERO_INTEIRO;
                     break;
                 case "ESPECIAL_2":
                     tipo = TipoTokenLexico.ESPECIAL;
+                    categoria = TokenLexico.CategorizarEspecial(valor);
                     break;
                 case "DECIMAL":
-                    tipo = TipoTokenLexico.NUMERO_DECIMAL;
+                    tipo = TipoTokenLexico.NUMERO;
+                    categoria = CategoriaTokenLexico.NUMERO_DECIMAL;
                     break;
                 case "CIENTIFICO":
-                    tipo = TipoTokenLexico.NUMERO_CIENTIFICO;
+                    tipo = TipoTokenLexico.NUMERO;
+                    categoria = CategoriaTokenLexico.NUMERO_CIENTIFICO;
                     break;
             }
-            return tipo;
+
+            return new TokenLexico() { Valor = valor, Tipo = tipo, Categoria = categoria };
         }
 
         void Transicao(Transicao transicao)
