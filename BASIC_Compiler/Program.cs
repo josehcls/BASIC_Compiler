@@ -17,13 +17,13 @@ namespace BASIC_Compiler
             MotorEventos motorFiltroAscii = new MotorEventos(new FiltroAscii(), 0, motorExtratorTokens.Eventos);
             MotorEventos motorLeitorArquivo = new MotorEventos(new LeitorDeArquivo(), 0, motorFiltroAscii.Eventos);
 
-            motorLeitorArquivo.Inicializar(new List<Evento> { new Evento(5, "ARQUIVO", "P1", "C://Files/a.txt")});
+            motorLeitorArquivo.Inicializar(new List<Evento> { new Evento(5, TipoEvento.ARQUIVO, "P1", "C://Files/a.txt")});
             while(motorLeitorArquivo.Rodar()) {}
             while(motorFiltroAscii.Rodar()) {}
             while(motorExtratorTokens.Rodar()) {}
 
             //filaFinal.ForEach(ev => Console.WriteLine(ev.Tipo + " - " + (ev.Tipo == "EOF" ? "EOF" : ( ((CaracterClassificado)ev.Conteudo).Caracter) + " " + ((CaracterClassificado)ev.Conteudo).Funcao + " " + ((CaracterClassificado)ev.Conteudo).Tipo ) ) );
-            filaFinal.ForEach(ev => Console.WriteLine(ev.Tipo + " - " + (ev.Tipo == "EOF" ? "EOF" : ( ((TokenLexico)ev.Conteudo).Tipo) + " " + ((TokenLexico)ev.Conteudo).Valor)));
+            filaFinal.ForEach(ev => Console.WriteLine(ev.Tipo + " - " + (ev.Tipo == TipoEvento.EOF ? "EOF" : ( ((TokenLexico)ev.Conteudo).Tipo) + " " + ((TokenLexico)ev.Conteudo).Valor)));
 
             Console.ReadKey();
         }

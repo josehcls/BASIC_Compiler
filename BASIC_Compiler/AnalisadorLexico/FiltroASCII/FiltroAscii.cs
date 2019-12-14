@@ -10,8 +10,8 @@ namespace BASIC_Compiler.AnalisadorLexico.FiltroASCII
 
         public FiltroAscii()
         {
-            Rotinas.Add("ASCII", new Func<Evento, SaidaRotina>(LerLinha));
-            Rotinas.Add("EOF", new Func<Evento, SaidaRotina>(Eof));
+            Rotinas.Add(TipoEvento.ASCII, new Func<Evento, SaidaRotina>(LerLinha));
+            Rotinas.Add(TipoEvento.EOF, new Func<Evento, SaidaRotina>(Eof));
         }
 
         public SaidaRotina LerLinha(Evento evento)
@@ -23,8 +23,8 @@ namespace BASIC_Compiler.AnalisadorLexico.FiltroASCII
                 linha = linha.Remove(0, 1);
                 return new SaidaRotina(
                     new List<Evento>(),
-                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, "ASCII", evento.Tarefa, linha) },
-                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, "ASCII", evento.Tarefa, caracterClassificado) }
+                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.ASCII, evento.Tarefa, linha) },
+                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.ASCII, evento.Tarefa, caracterClassificado) }
                 );
             }
             else
@@ -42,7 +42,7 @@ namespace BASIC_Compiler.AnalisadorLexico.FiltroASCII
             return new SaidaRotina(
                 new List<Evento>(),
                 new List<Evento>(),
-                new List<Evento> { new Evento(evento.InstanteProgramado + 1, "EOF", evento.Tarefa, null) }
+                new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.EOF, evento.Tarefa, null) }
             );
         }
     }

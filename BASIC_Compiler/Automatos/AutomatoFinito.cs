@@ -10,9 +10,9 @@ namespace BASIC_Compiler.Automatos
         public List<Transicao> Transicoes { get; set; }
         public List<string> EstadosFinais { get; set; }
 
-        public Transicao BuscaTransicao(string estadoAtual, string simbolo)
+        public Transicao BuscaTransicao(string estadoAtual, object simbolo)
         {
-            return Transicoes.Where(t => t.Origem == estadoAtual && t.Simbolo == simbolo).SingleOrDefault();
+            return Transicoes.Where(t => t.TransicaoValida(estadoAtual, simbolo)).SingleOrDefault();
         }
 
         public bool ConfereEstadoFinal(string estado)
@@ -21,11 +21,5 @@ namespace BASIC_Compiler.Automatos
         }
 
     }
-    public class Transicao
-    {
-        public virtual string Origem { get; set; }
-        public virtual string Simbolo { get; set; }
-        public virtual string Destino { get; set; }
-    }
-}
+ }
 

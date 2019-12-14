@@ -5,11 +5,11 @@ namespace BASIC_Compiler
 {
     public abstract class SeletorRotinas
     {
-        public Dictionary<string, Func<Evento, SaidaRotina>> Rotinas;
+        public Dictionary<TipoEvento, Func<Evento, SaidaRotina>> Rotinas;
 
         public SeletorRotinas()
         {
-            Rotinas = new Dictionary<string, Func<Evento, SaidaRotina>>();
+            Rotinas = new Dictionary<TipoEvento, Func<Evento, SaidaRotina>>();
         }
 
         public SaidaRotina ProcessarEvento(Evento evento)

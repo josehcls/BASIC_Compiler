@@ -4,9 +4,13 @@ using System.Text;
 
 namespace BASIC_Compiler.AnalisadorLexico.Utils
 {
-    public class TokenLexico
+    public enum TipoCaracter
     {
-        public string Valor { get; set; }
-        public TipoTokenLexico Tipo { get; set; }
+        LETRA,
+        DIGITO,
+        DELIMITADOR,
+        ESPECIAL,
+        CONTROLE,
+        NA
     }
 }

@@ -11,8 +11,8 @@ namespace BASIC_Compiler.AnalisadorLexico.LeitorDeArquivo
 
         public LeitorDeArquivo()
         {
-            Rotinas.Add("ARQUIVO", new Func<Evento, SaidaRotina>(AbrirArquivo));
-            Rotinas.Add("LER_ARQUIVO", new Func<Evento, SaidaRotina>(LerArquivo));
+            Rotinas.Add(TipoEvento.ARQUIVO, new Func<Evento, SaidaRotina>(AbrirArquivo));
+            Rotinas.Add(TipoEvento.LER_ARQUIVO, new Func<Evento, SaidaRotina>(LerArquivo));
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace BASIC_Compiler.AnalisadorLexico.LeitorDeArquivo
             Arquivo = new StreamReader(evento.Conteudo.ToString());
             return new SaidaRotina(
                 new List<Evento>(),
-                new List<Evento> { new Evento(evento.InstanteProgramado + 1, "LER_ARQUIVO", evento.Tarefa, Arquivo) },
+                new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.LER_ARQUIVO, evento.Tarefa, Arquivo) },
                 new List<Evento>()
             );
         }
@@ -47,11 +47,11 @@ namespace BASIC_Compiler.AnalisadorLexico.LeitorDeArquivo
             StreamReader streamReader = (StreamReader)evento.Conteudo;
             if (!streamReader.EndOfStream)
             {
-                string linha = streamReader.ReadLine();
+                string linha = streamReader.ReadLine() + "\n";
                 return new SaidaRotina(
                     new List<Evento>(),
-                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, "LER_ARQUIVO", evento.Tarefa, streamReader) },
-                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, "ASCII", evento.Tarefa, linha) }
+                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.LER_ARQUIVO, evento.Tarefa, streamReader) },
+                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.ASCII, evento.Tarefa, linha) }
                 );
             }
             else //EOF
@@ -60,7 +60,7 @@ namespace BASIC_Compiler.AnalisadorLexico.LeitorDeArquivo
                 return new SaidaRotina(
                     new List<Evento>(),
                     new List<Evento>(),
-                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, "EOF", evento.Tarefa, null) }
+                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.EOF, evento.Tarefa, null) }
                 );
             }
         }
