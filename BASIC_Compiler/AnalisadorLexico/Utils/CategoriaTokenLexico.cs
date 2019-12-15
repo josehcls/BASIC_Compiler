@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BASIC_Compiler.AnalisadorLexico.Utils
+﻿namespace BASIC_Compiler.AnalisadorLexico.Utils
 {
     public enum CategoriaTokenLexico
     {
-        IDENTIFICADOR,
+        IDENTIFICADOR_LETRA,
+        IDENTIFICADOR_LETRA_NUMERO,
         NA,
 
         #region Palavras Reservadas
@@ -36,6 +33,7 @@ namespace BASIC_Compiler.AnalisadorLexico.Utils
         RESERVADA_NEXT,
         RESERVADA_DIM,
         RESERVADA_DEF,
+        RESERVADA_DEF_FN,
         RESERVADA_GOSUB,
         RESERVADA_RETURN,
         RESERVADA_REM,
