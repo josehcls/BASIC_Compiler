@@ -39,7 +39,7 @@ namespace BASIC_Compiler.AnalisadorLexico.Utils
             else if (ESPECIAIS.Contains(caracter))
                 funcao = FuncaoCaracter.UTIL;
             else if (QUEBRA_LINHA.Contains(caracter))
-                funcao = FuncaoCaracter.DESCARTAVEL;
+                funcao = FuncaoCaracter.CONTROLE;
             return funcao;
         }
 

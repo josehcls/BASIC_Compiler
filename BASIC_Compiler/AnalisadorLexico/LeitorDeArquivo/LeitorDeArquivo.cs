@@ -47,11 +47,11 @@ namespace BASIC_Compiler.AnalisadorLexico.LeitorDeArquivo
             StreamReader streamReader = (StreamReader)evento.Conteudo;
             if (!streamReader.EndOfStream)
             {
-                string linha = streamReader.ReadLine() + "\n";
+                string linha = streamReader.ReadLine();
                 return new SaidaRotina(
                     new List<Evento>(),
                     new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.LER_ARQUIVO, evento.Tarefa, streamReader) },
-                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.ASCII, evento.Tarefa, linha) }
+                    new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.ASCII, evento.Tarefa, linha), new Evento(evento.InstanteProgramado + 1, TipoEvento.EOL, evento.Tarefa, null) }
                 );
             }
             else //EOF

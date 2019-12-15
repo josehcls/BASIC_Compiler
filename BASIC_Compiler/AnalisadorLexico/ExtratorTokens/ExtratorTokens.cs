@@ -16,12 +16,18 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
 
         private static List<char> DIGITOS = CaracterClassificado.DIGITOS;
 
-        public static List<char> ESPECIAIS= new List<char> { '=', '<', '>', '(', ')', ',', '*', '/', ',', '^', '"' }; 
+        public static List<char> ESPECIAIS = new List<char> { '=', '<', '>', '(', ')', ',', '*', '/', ',', '^' };
         public static List<char> MAIS_MENOS = new List<char> { '+', '-' };
         public static List<char> PONTO = new List<char> { '.' };
         public static List<char> E = new List<char> { 'E' };
+        public static List<char> ASPAS = new List<char> { '"' };
 
-        public static List<char> DELIMITADORES = new List<char>().Concat(CaracterClassificado.ESPACADORES).Concat(CaracterClassificado.QUEBRA_LINHA).ToList();
+        public static List<char> ESPECIAIS_TEXTO = new List<char> { '!', '@', '#', '$', '%', '&', '*', '(', ')', '-', '_', '+', '=', '<', '>', '.', ',', '{', '}', '[', ']', '?', '\'', '~', ';', ':', '|', ' ', '\t', '/', '\\' };
+
+        public static List<char> CARACTERES = new List<char>().Concat(LETRAS).Concat(DIGITOS).Concat(ESPECIAIS_TEXTO).ToList();
+
+        //public static List<char> DELIMITADORES = new List<char>().Concat(CaracterClassificado.ESPACADORES).Concat(CaracterClassificado.QUEBRA_LINHA).ToList();
+        public static List<char> DELIMITADORES = CaracterClassificado.ESPACADORES;
 
         public ExtratorTokens()
         {
@@ -31,6 +37,7 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
 
             Rotinas.Add(TipoEvento.ASCII, new Func<Evento, SaidaRotina>(ReceberCaracter));
             Rotinas.Add(TipoEvento.RESET, new Func<Evento, SaidaRotina>(Reset));
+            Rotinas.Add(TipoEvento.EOL, new Func<Evento, SaidaRotina>(Eol));
             Rotinas.Add(TipoEvento.EOF, new Func<Evento, SaidaRotina>(Eof));
         }
 
@@ -57,26 +64,23 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                     new List<Evento>()
                 );
             }
+            else if (caracterClassificado.Tipo == TipoCaracter.DELIMITADOR)
+            {
+                return new SaidaRotina(
+                    new List<Evento>(),
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null), new Evento(evento.InstanteProgramado + 2, TipoEvento.ASCII, evento.Tarefa, evento.Conteudo) },
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.TOKEN_LEXICO, evento.Tarefa, GetTokenLexicoFromEstadoAtual()) }
+                );
+            }
             else
             {
-                if (Cabecote.Aceito)
-                {
-                    return new SaidaRotina(
-                        new List<Evento>(),
-                        new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null), new Evento(evento.InstanteProgramado + 2, TipoEvento.ASCII, evento.Tarefa, evento.Conteudo) },
-                        new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.TOKEN_LEXICO, evento.Tarefa, GetTokenLexicoFromEstadoAtual()) }
-                    );
-                }
-                else
-                {
-                    // TODO: Reportar Erro! -- Casos como "3a" não estão caindo aqui.... Ele le como Num "3" e Id "a"
-                    Console.WriteLine("ERRO: SEM TRANSIÇÃO");
-                    return new SaidaRotina(
-                        new List<Evento>(),
-                        new List<Evento>(),
-                        new List<Evento>()
-                    );
-                }
+                TransicaoNA();
+                Acumulador.Add(caracterClassificado);
+                return new SaidaRotina(
+                    new List<Evento>(),
+                    new List<Evento>(),
+                    new List<Evento>()
+                );
             }
         }
 
@@ -89,6 +93,23 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                 new List<Evento>(),
                 new List<Evento>()
             );
+        }
+
+        SaidaRotina Eol(Evento evento)
+        {
+            if (Acumulador.Any())
+                return new SaidaRotina(
+                    new List<Evento>(),
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null) },
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.TOKEN_LEXICO, evento.Tarefa, GetTokenLexicoFromEstadoAtual()), new Evento(evento.InstanteProgramado + 1, TipoEvento.EOL, evento.Tarefa, null) }
+                );
+
+            else
+                return new SaidaRotina(
+                    new List<Evento>(),
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null) },
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.EOL, evento.Tarefa, null) }
+                );
         }
 
         SaidaRotina Eof(Evento evento)
@@ -105,8 +126,8 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
             return new AutomatoFinito()
             {
                 EstadoInicial = "START",
-                Estados = new List<string> { "START", "ESPECIAL", "IDENTIFICADOR", "INTEIRO", "ESPECIAL_2", "PRE_DECIMAL", "DECIMAL", "PRE_CIENTIFICO", "PRE_CIENTIFICO_2", "CIENTIFICO" },
-                EstadosFinais = new List<string> {"ESPECIAL", "IDENTIFICADOR", "INTEIRO", "ESPECIAL_2", "DECIMAL", "CIENTIFICO"},
+                Estados = new List<string> { "START", "ESPECIAL", "IDENTIFICADOR", "INTEIRO", "ESPECIAL_2", "PRE_DECIMAL", "DECIMAL", "PRE_CIENTIFICO", "PRE_CIENTIFICO_2", "CIENTIFICO", "PRE_TEXTO", "TEXTO", "NA" },
+                EstadosFinais = new List<string> { "ESPECIAL", "IDENTIFICADOR", "INTEIRO", "ESPECIAL_2", "DECIMAL", "CIENTIFICO", "TEXTO" },
                 Transicoes = new List<Transicao> {
                     new TransicaoExtratorTokens("START", "START", DELIMITADORES),
                     new TransicaoExtratorTokens("START", "ESPECIAL", ESPECIAIS),
@@ -114,6 +135,7 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                     new TransicaoExtratorTokens("START", "INTEIRO", DIGITOS),
                     new TransicaoExtratorTokens("START", "ESPECIAL_2", MAIS_MENOS),
                     new TransicaoExtratorTokens("START", "PRE_DECIMAL", PONTO),
+                    new TransicaoExtratorTokens("START", "PRE_TEXTO", ASPAS),
                     new TransicaoExtratorTokens("IDENTIFICADOR", "IDENTIFICADOR", LETRAS),
                     new TransicaoExtratorTokens("IDENTIFICADOR", "IDENTIFICADOR", DIGITOS),
                     new TransicaoExtratorTokens("INTEIRO", "INTEIRO", DIGITOS),
@@ -127,6 +149,10 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                     new TransicaoExtratorTokens("PRE_CIENTIFICO_1", "PRE_CIENTIFICO_2", MAIS_MENOS),
                     new TransicaoExtratorTokens("PRE_CIENTIFICO_2", "CIENTIFICO", DIGITOS),
                     new TransicaoExtratorTokens("CIENTIFICO", "CIENTIFICO", DIGITOS),
+                    new TransicaoExtratorTokens("PRE_TEXTO", "PRE_TEXTO", CARACTERES),
+                    new TransicaoExtratorTokens("PRE_TEXTO", "TEXTO", ASPAS),
+
+                    new TransicaoExtratorTokens("NA", "NA", CARACTERES),
                 }
             };
         }
@@ -163,6 +189,10 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                     tipo = TipoTokenLexico.NUMERO;
                     categoria = CategoriaTokenLexico.NUMERO_CIENTIFICO;
                     break;
+                case "TEXTO":
+                    tipo = TipoTokenLexico.TEXTO;
+                    categoria = CategoriaTokenLexico.TEXTO;
+                    break;
             }
 
             return new TokenLexico() { Valor = valor, Tipo = tipo, Categoria = categoria };
@@ -172,6 +202,11 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
         {
             Cabecote.EstadoAtual = transicao.Destino;
             Cabecote.Aceito = AutomatoFinito.ConfereEstadoFinal(Cabecote.EstadoAtual);
+        }
+
+        void TransicaoNA()
+        {
+            Cabecote.EstadoAtual = "NA";
         }
 
     }

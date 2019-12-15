@@ -11,6 +11,7 @@ namespace BASIC_Compiler.AnalisadorLexico.FiltroASCII
         public FiltroAscii()
         {
             Rotinas.Add(TipoEvento.ASCII, new Func<Evento, SaidaRotina>(LerLinha));
+            Rotinas.Add(TipoEvento.EOL, new Func<Evento, SaidaRotina>(Eol));
             Rotinas.Add(TipoEvento.EOF, new Func<Evento, SaidaRotina>(Eof));
         }
 
@@ -35,6 +36,15 @@ namespace BASIC_Compiler.AnalisadorLexico.FiltroASCII
                     new List<Evento>()
                 );
             }
+        }
+
+        public SaidaRotina Eol(Evento evento)
+        {
+            return new SaidaRotina(
+                new List<Evento>(),
+                new List<Evento>(),
+                new List<Evento> { new Evento(evento.InstanteProgramado + 1, TipoEvento.EOL, evento.Tarefa, null) }
+            );
         }
 
         public SaidaRotina Eof(Evento evento)

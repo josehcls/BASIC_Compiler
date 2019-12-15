@@ -5,7 +5,7 @@ namespace BASIC_Compiler.Automatos
 {
     public class TransicaoRecategorizadorLexico : Transicao
     {
-        public new CategoriaTokenLexico Simbolo { get; set; }
+        public CategoriaTokenLexico Simbolo { get; set; }
 
         public TransicaoRecategorizadorLexico(string origem, string destino, CategoriaTokenLexico simbolo)
         {

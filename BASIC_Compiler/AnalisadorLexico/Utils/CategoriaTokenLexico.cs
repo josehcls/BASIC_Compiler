@@ -5,6 +5,7 @@
         IDENTIFICADOR_LETRA,
         IDENTIFICADOR_LETRA_NUMERO,
         NA,
+        TEXTO,
 
         #region Palavras Reservadas
         RESERVADA_END,

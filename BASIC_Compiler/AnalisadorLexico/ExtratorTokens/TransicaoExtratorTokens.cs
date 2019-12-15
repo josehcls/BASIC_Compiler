@@ -6,7 +6,7 @@ namespace BASIC_Compiler.Automatos
 {
     public class TransicaoExtratorTokens : Transicao
     {
-        public new List<char> Simbolos { get; set; }
+        public List<char> Simbolos { get; set; }
 
         public TransicaoExtratorTokens(string origem, string destino, List<char> simbolos) 
         {

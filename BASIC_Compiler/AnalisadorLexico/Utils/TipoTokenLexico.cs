@@ -6,5 +6,6 @@
          IDENTIFICADOR,
          ESPECIAL,
          NA,
+         TEXTO,
     }
 }

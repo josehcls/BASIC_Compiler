@@ -21,6 +21,7 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
 
             Rotinas.Add(TipoEvento.TOKEN_LEXICO, new Func<Evento, SaidaRotina>(ReceberToken));
             Rotinas.Add(TipoEvento.RESET, new Func<Evento, SaidaRotina>(Reset));
+            Rotinas.Add(TipoEvento.EOL, new Func<Evento, SaidaRotina>(Eol));
             Rotinas.Add(TipoEvento.EOF, new Func<Evento, SaidaRotina>(Eof));
         }
 
@@ -76,6 +77,11 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                 new List<Evento>(),
                 new List<Evento>()
             );
+        }
+
+        private SaidaRotina Eol(Evento arg)
+        {
+            throw new NotImplementedException();
         }
 
         SaidaRotina Eof(Evento evento)

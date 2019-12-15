@@ -2,7 +2,8 @@
 {
     public enum TipoEvento
     {
-        EOF,
+        EOF, // End of File
+        EOL, // End of Line
         ARQUIVO,
         LER_ARQUIVO,
         ASCII,
