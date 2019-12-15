@@ -79,10 +79,22 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
             );
         }
 
-        private SaidaRotina Eol(Evento arg)
+        private SaidaRotina Eol(Evento evento)
         {
-            throw new NotImplementedException();
-        }
+            if (Acumulador.Any())
+                return new SaidaRotina(
+                    new List<Evento>(),
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null) },
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.TOKEN_LEXICO, evento.Tarefa, GetTokenLexicoFromEstadoAtual()), new Evento(evento.InstanteProgramado + 2, TipoEvento.EOL, evento.Tarefa, null) }
+                );
+
+            else
+                return new SaidaRotina(
+                    new List<Evento>(),
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null) },
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.EOL, evento.Tarefa, null) }
+                );
+            }
 
         SaidaRotina Eof(Evento evento)
         {
@@ -98,18 +110,20 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
             return new AutomatoFinito()
             {
                 EstadoInicial = "START",
-                Estados = new List<string> { "START", "GOTO", "PRE_GOTO", "DEF_FN", "PRE_DEF_FN", "MAIOR_IGUAL", "PRE_MAIOR_IGUAL", "MENOR_IGUAL", "PRE_MENOR", "DIFERENTE", "PRE_DIFERENTE" },
-                EstadosFinais = new List<string> { "GOTO", "DEF_FN", "MAIOR_IGUAL", "MENOR_IGUAL", "DIFERENTE" },
+                Estados = new List<string> { "START", "GOTO", "PRE_GOTO", "DEF_FN", "PRE_DEF_FN", "MAIOR_IGUAL", "PRE_MAIOR_IGUAL", "MENOR_IGUAL", "PRE_MENOR", "DIFERENTE", "PRE_DIFERENTE", "REMARK" },
+                EstadosFinais = new List<string> { "GOTO", "DEF_FN", "MAIOR_IGUAL", "MENOR_IGUAL", "DIFERENTE", "REMARK" },
                 Transicoes = new List<Transicao> {
                     new TransicaoRecategorizadorLexico("START", "PRE_GOTO", CategoriaTokenLexico.RESERVADA_GO),
                     new TransicaoRecategorizadorLexico("START", "PRE_DEF_FN", CategoriaTokenLexico.RESERVADA_DEF),
                     new TransicaoRecategorizadorLexico("START", "PRE_MAIOR_IGUAL", CategoriaTokenLexico.ESPECIAL_MAIOR),
                     new TransicaoRecategorizadorLexico("START", "PRE_MENOR", CategoriaTokenLexico.ESPECIAL_MENOR),
+                    new TransicaoRecategorizadorLexico("START", "REMARK", CategoriaTokenLexico.RESERVADA_REM),
                     new TransicaoRecategorizadorLexico("PRE_GOTO", "GOTO",  CategoriaTokenLexico.RESERVADA_TO),
                     new TransicaoRecategorizadorLexico("PRE_DEF_FN", "DEF_FN",  CategoriaTokenLexico.RESERVADA_FN),
                     new TransicaoRecategorizadorLexico("PRE_MAIOR_IGUAL", "MAIOR_IGUAL",  CategoriaTokenLexico.ESPECIAL_IGUAL),
                     new TransicaoRecategorizadorLexico("PRE_MENOR", "MENOR_IGUAL",  CategoriaTokenLexico.ESPECIAL_IGUAL),
                     new TransicaoRecategorizadorLexico("PRE_MENOR", "DIFERENTE",  CategoriaTokenLexico.ESPECIAL_MAIOR),
+                    new TransicaoRecategorizadorLexico("REMARK", "REMARK", CategoriaTokenLexico.WILDCARD),
                 }
             };
         }
@@ -141,6 +155,10 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                 case "DIFERENTE":
                     tipo = TipoTokenLexico.ESPECIAL;
                     categoria = CategoriaTokenLexico.ESPECIAL_DIFERENTE;
+                    break;
+                case "REMARK":
+                    tipo = TipoTokenLexico.TEXTO;
+                    categoria = CategoriaTokenLexico.COMENTARIO;
                     break;
             }
 

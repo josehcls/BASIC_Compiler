@@ -101,7 +101,7 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                 return new SaidaRotina(
                     new List<Evento>(),
                     new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null) },
-                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.TOKEN_LEXICO, evento.Tarefa, GetTokenLexicoFromEstadoAtual()), new Evento(evento.InstanteProgramado + 1, TipoEvento.EOL, evento.Tarefa, null) }
+                    new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.TOKEN_LEXICO, evento.Tarefa, GetTokenLexicoFromEstadoAtual()), new Evento(evento.InstanteProgramado + 2, TipoEvento.EOL, evento.Tarefa, null) }
                 );
 
             else

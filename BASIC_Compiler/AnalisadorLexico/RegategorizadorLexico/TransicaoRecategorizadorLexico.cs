@@ -16,7 +16,13 @@ namespace BASIC_Compiler.Automatos
 
         public override bool TransicaoValida(string estadoAtual, object simbolo)
         {
-            return Origem == estadoAtual && Simbolo == (CategoriaTokenLexico)Enum.Parse(typeof(CategoriaTokenLexico), simbolo.ToString());
+            if (Simbolo == CategoriaTokenLexico.WILDCARD)
+            {
+                // Transição Coringa
+                return Origem == estadoAtual;
+            }
+            else
+                return Origem == estadoAtual && Simbolo == (CategoriaTokenLexico)Enum.Parse(typeof(CategoriaTokenLexico), simbolo.ToString());
         }
     }
 }

@@ -4,8 +4,9 @@
     {
         IDENTIFICADOR_LETRA,
         IDENTIFICADOR_LETRA_NUMERO,
-        NA,
+        COMENTARIO,
         TEXTO,
+        NA,
 
         #region Palavras Reservadas
         RESERVADA_END,
@@ -64,5 +65,6 @@
         ESPECIAL_ASPAS,
         #endregion
 
+        WILDCARD,
     }
 }
