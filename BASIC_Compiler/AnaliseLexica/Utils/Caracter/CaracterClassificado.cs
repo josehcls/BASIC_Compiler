@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BASIC_Compiler.AnalisadorLexico.Utils
+namespace BASIC_Compiler.AnaliseLexica.Utils.Caracter
 {
     public class CaracterClassificado
     {
@@ -16,7 +16,7 @@ namespace BASIC_Compiler.AnalisadorLexico.Utils
         public static List<char> ESPACADORES = new List<char> { ' ', '\t' };
         public static List<char> QUEBRA_LINHA = new List<char> { '\n', '\r' };
 
-        public static List<char> ESPECIAIS = new List<char> { '=', '<', '>', '(', ')', '.', ',', '+', '-', '*', '/', ',', '^', '"',  }; 
+        public static List<char> ESPECIAIS = new List<char> { '=', '<', '>', '(', ')', '.', ',', '+', '-', '*', '/', ',', '^', '"', };
 
         public CaracterClassificado(char caracter)
         {

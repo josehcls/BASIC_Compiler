@@ -1,8 +1,9 @@
-﻿using System;
+﻿using BASIC_Compiler.MotorDeEventos;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace BASIC_Compiler.AnalisadorLexico.LeitorDeArquivo
+namespace BASIC_Compiler.AnaliseLexica.Processos.LeituraArquivo
 {
     public class LeitorDeArquivo : SeletorRotinas
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BASIC_Compiler
+namespace BASIC_Compiler.MotorDeEventos
 {
     public abstract class SeletorRotinas
     {

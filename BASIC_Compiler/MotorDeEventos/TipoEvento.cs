@@ -1,4 +1,4 @@
-﻿namespace BASIC_Compiler
+﻿namespace BASIC_Compiler.MotorDeEventos
 {
     public enum TipoEvento
     {

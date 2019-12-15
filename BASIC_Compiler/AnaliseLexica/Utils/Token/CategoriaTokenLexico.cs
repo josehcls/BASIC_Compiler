@@ -1,4 +1,4 @@
-﻿namespace BASIC_Compiler.AnalisadorLexico.Utils
+﻿namespace BASIC_Compiler.AnaliseLexica.Utils.Token
 {
     public enum CategoriaTokenLexico
     {

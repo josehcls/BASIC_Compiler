@@ -1,7 +1,8 @@
-﻿using BASIC_Compiler.AnalisadorLexico.Utils;
+﻿using BASIC_Compiler.AnaliseLexica.Utils.Token;
+using BASIC_Compiler.Automatos;
 using System;
 
-namespace BASIC_Compiler.Automatos
+namespace BASIC_Compiler.AnaliseLexica.Processos.RecategorizacaoLexica
 {
     public class TransicaoRecategorizadorLexico : Transicao
     {

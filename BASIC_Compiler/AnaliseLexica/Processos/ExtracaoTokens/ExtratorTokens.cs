@@ -1,10 +1,12 @@
-﻿using BASIC_Compiler.AnalisadorLexico.Utils;
+﻿using BASIC_Compiler.AnaliseLexica.Utils.Caracter;
+using BASIC_Compiler.AnaliseLexica.Utils.Token;
 using BASIC_Compiler.Automatos;
+using BASIC_Compiler.MotorDeEventos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
+namespace BASIC_Compiler.AnaliseLexica.Processos.ExtracaoTokens
 {
     public class ExtratorTokens : SeletorRotinas
     {

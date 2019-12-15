@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace BASIC_Compiler.AnalisadorLexico.Utils
+namespace BASIC_Compiler.AnaliseLexica.Utils.Token
 {
     public class TokenLexico
     {
@@ -114,7 +114,7 @@ namespace BASIC_Compiler.AnalisadorLexico.Utils
             return categoria;
         }
 
-       public static CategoriaTokenLexico CategorizarEspecial(string valor)
+        public static CategoriaTokenLexico CategorizarEspecial(string valor)
         {
             CategoriaTokenLexico categoria = CategoriaTokenLexico.NA;
             switch (valor)

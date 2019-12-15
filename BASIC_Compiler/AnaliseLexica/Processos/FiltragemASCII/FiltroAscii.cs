@@ -1,9 +1,9 @@
-﻿using BASIC_Compiler.AnalisadorLexico.Utils;
+﻿using BASIC_Compiler.AnaliseLexica.Utils.Caracter;
+using BASIC_Compiler.MotorDeEventos;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace BASIC_Compiler.AnalisadorLexico.FiltroASCII
+namespace BASIC_Compiler.AnaliseLexica.Processos.FiltragemASCII
 {
     public class FiltroAscii : SeletorRotinas
     {
@@ -18,7 +18,7 @@ namespace BASIC_Compiler.AnalisadorLexico.FiltroASCII
         public SaidaRotina LerLinha(Evento evento)
         {
             string linha = (string)evento.Conteudo;
-            if (!String.IsNullOrEmpty(linha))
+            if (!string.IsNullOrEmpty(linha))
             {
                 CaracterClassificado caracterClassificado = new CaracterClassificado(linha[0]);
                 linha = linha.Remove(0, 1);

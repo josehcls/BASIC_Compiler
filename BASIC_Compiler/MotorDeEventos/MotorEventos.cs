@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace BASIC_Compiler { public class MotorEventos { public Evento EventoCorrente { get; set; }
+namespace BASIC_Compiler.MotorDeEventos
+{
+    public class MotorEventos
+    {
+        public Evento EventoCorrente { get; set; }
         public List<Evento> Eventos { get; set; }
         public List<Evento> EventosPrioritarios { get; set; }
         public int InstanteExecucao { get; set; }
@@ -54,15 +56,15 @@ namespace BASIC_Compiler { public class MotorEventos { public Evento EventoCorre
             SaidaRotina saidaRotina = SeletorRotinas.ProcessarEvento(evento);
             Eventos.AddRange(saidaRotina.EventosInternos);
             EventosPrioritarios.AddRange(saidaRotina.EventosPrioritarios);
-            if(FilaSaida != null) FilaSaida.AddRange(saidaRotina.EventosExternos);
+            if (FilaSaida != null) FilaSaida.AddRange(saidaRotina.EventosExternos);
         }
 
-        public void ReceberEvento (Evento evento)
+        public void ReceberEvento(Evento evento)
         {
             Eventos.Add(evento);
         }
 
-        public void EnviarEvento (Evento evento)
+        public void EnviarEvento(Evento evento)
         {
             FilaSaida.Add(evento);
         }

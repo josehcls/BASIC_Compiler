@@ -1,10 +1,11 @@
-﻿using BASIC_Compiler.AnalisadorLexico.Utils;
+﻿using BASIC_Compiler.AnaliseLexica.Utils.Token;
 using BASIC_Compiler.Automatos;
+using BASIC_Compiler.MotorDeEventos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
+namespace BASIC_Compiler.AnaliseLexica.Processos.RecategorizacaoLexica
 {
     public class RecategorizadorLexico : SeletorRotinas
     {
@@ -66,7 +67,7 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                         new List<Evento>(),
                         new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null) },
                         eventosSaida
-                    ) ;
+                    );
                 }
             }
         }
@@ -98,7 +99,7 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                     new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null) },
                     new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.EOL, evento.Tarefa, null) }
                 );
-            }
+        }
 
         SaidaRotina Eof(Evento evento)
         {

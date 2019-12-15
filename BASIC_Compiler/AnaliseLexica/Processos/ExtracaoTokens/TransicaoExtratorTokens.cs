@@ -1,14 +1,14 @@
-﻿using BASIC_Compiler.AnalisadorLexico.Utils;
+﻿using BASIC_Compiler.Automatos;
 using System;
 using System.Collections.Generic;
 
-namespace BASIC_Compiler.Automatos
+namespace BASIC_Compiler.AnaliseLexica.Processos.ExtracaoTokens
 {
     public class TransicaoExtratorTokens : Transicao
     {
         public List<char> Simbolos { get; set; }
 
-        public TransicaoExtratorTokens(string origem, string destino, List<char> simbolos) 
+        public TransicaoExtratorTokens(string origem, string destino, List<char> simbolos)
         {
             Origem = origem;
             Destino = destino;
