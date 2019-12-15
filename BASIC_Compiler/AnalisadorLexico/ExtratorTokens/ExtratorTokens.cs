@@ -64,7 +64,7 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                     new List<Evento>()
                 );
             }
-            else if (caracterClassificado.Tipo == TipoCaracter.DELIMITADOR)
+            else if (caracterClassificado.Tipo == TipoCaracter.DELIMITADOR || Cabecote.Aceito)
             {
                 return new SaidaRotina(
                     new List<Evento>(),

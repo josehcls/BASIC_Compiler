@@ -101,10 +101,14 @@ namespace BASIC_Compiler.AnalisadorLexico.Utils
                     categoria = CategoriaTokenLexico.RESERVADA_REM;
                     break;
                 default:
-                    if (Regex.IsMatch(valor, @"[a-zA-Z]"))
+                    if (Regex.IsMatch(valor, @"^\w$"))
+                    {
                         categoria = CategoriaTokenLexico.IDENTIFICADOR_LETRA;
-                    else if (Regex.IsMatch(valor, @"[a-zA-Z]\d?"))
+                    }
+                    else if (Regex.IsMatch(valor, @"^\w\d$"))
+                    {
                         categoria = CategoriaTokenLexico.IDENTIFICADOR_LETRA_NUMERO;
+                    }
                     break;
             }
             return categoria;

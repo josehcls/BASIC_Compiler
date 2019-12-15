@@ -58,11 +58,15 @@ namespace BASIC_Compiler.AnalisadorLexico.ExtratorTokens
                 }
                 else
                 {
+                    List<Evento> eventosSaida = new List<Evento>();
+                    eventosSaida.AddRange(Acumulador.Select(t => new Evento(evento.InstanteProgramado + 1, TipoEvento.TOKEN_LEXICO, evento.Tarefa, t)));
+                    eventosSaida.Add(new Evento(evento.InstanteProgramado + 2, TipoEvento.TOKEN_LEXICO, evento.Tarefa, evento.Conteudo));
+
                     return new SaidaRotina(
                         new List<Evento>(),
                         new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.RESET, evento.Tarefa, null) },
-                        new List<Evento>() { new Evento(evento.InstanteProgramado + 1, TipoEvento.TOKEN_LEXICO, evento.Tarefa, evento.Conteudo) }
-                    );
+                        eventosSaida
+                    ) ;
                 }
             }
         }
