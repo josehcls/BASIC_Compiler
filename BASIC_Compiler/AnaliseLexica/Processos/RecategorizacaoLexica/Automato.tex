@@ -1,0 +1,73 @@
+﻿\documentclass[12pt]{article}
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (9.3,-26.3) circle (3);
+\draw (9.3,-26.3) node {$Start$};
+\draw [black] (34.8,-4.8) circle (3);
+\draw (34.8,-4.8) node {$p_gt$};
+\draw [black] (60.7,-4.8) circle (3);
+\draw (60.7,-4.8) node {$goto$};
+\draw [black] (60.7,-4.8) circle (2.4);
+\draw [black] (34.8,-15.9) circle (3);
+\draw (34.8,-15.9) node {$p_df$};
+\draw [black] (60.7,-15.9) circle (3);
+\draw (60.7,-15.9) node {$def\mbox{ }fn$};
+\draw [black] (60.7,-15.9) circle (2.4);
+\draw [black] (34.8,-26.3) circle (3);
+\draw (34.8,-26.3) node {$>$};
+\draw [black] (60.7,-26.3) circle (3);
+\draw (60.7,-26.3) node {$>=$};
+\draw [black] (60.7,-26.3) circle (2.4);
+\draw [black] (34.8,-39) circle (3);
+\draw (34.8,-39) node {$<$};
+\draw [black] (60.7,-39) circle (3);
+\draw (60.7,-39) node {$<=$};
+\draw [black] (60.7,-39) circle (2.4);
+\draw [black] (60.7,-53.7) circle (3);
+\draw (60.7,-53.7) node {$<>$};
+\draw [black] (60.7,-53.7) circle (2.4);
+\draw [black] (34.8,-53.7) circle (3);
+\draw (34.8,-53.7) node {$rem$};
+\draw [black] (34.8,-53.7) circle (2.4);
+\draw [black] (11.59,-24.37) -- (32.51,-6.73);
+\fill [black] (32.51,-6.73) -- (31.57,-6.87) -- (32.22,-7.63);
+\draw (24.82,-16.04) node [below] {$"GO"$};
+\draw [black] (37.8,-4.8) -- (57.7,-4.8);
+\fill [black] (57.7,-4.8) -- (56.9,-4.3) -- (56.9,-5.3);
+\draw (47.75,-5.3) node [below] {$"TO"$};
+\draw [black] (12.08,-25.17) -- (32.02,-17.03);
+\fill [black] (32.02,-17.03) -- (31.09,-16.87) -- (31.47,-17.8);
+\draw (25.13,-21.65) node [below] {$"DEF"$};
+\draw [black] (37.8,-15.9) -- (57.7,-15.9);
+\fill [black] (57.7,-15.9) -- (56.9,-15.4) -- (56.9,-16.4);
+\draw (47.75,-16.4) node [below] {$"FN"$};
+\draw [black] (12.3,-26.3) -- (31.8,-26.3);
+\fill [black] (31.8,-26.3) -- (31,-25.8) -- (31,-26.8);
+\draw (22.05,-26.8) node [below] {$">"$};
+\draw [black] (37.8,-26.3) -- (57.7,-26.3);
+\fill [black] (57.7,-26.3) -- (56.9,-25.8) -- (56.9,-26.8);
+\draw (47.75,-26.8) node [below] {$">="$};
+\draw [black] (11.99,-27.64) -- (32.11,-37.66);
+\fill [black] (32.11,-37.66) -- (31.62,-36.86) -- (31.18,-37.75);
+\draw (20.19,-33.16) node [below] {$"<"$};
+\draw [black] (37.8,-39) -- (57.7,-39);
+\fill [black] (57.7,-39) -- (56.9,-38.5) -- (56.9,-39.5);
+\draw (47.75,-39.5) node [below] {$"<="$};
+\draw [black] (37.41,-40.48) -- (58.09,-52.22);
+\fill [black] (58.09,-52.22) -- (57.64,-51.39) -- (57.15,-52.26);
+\draw (45.31,-46.85) node [below] {$"<>"$};
+\draw [black] (11.34,-28.5) -- (32.76,-51.5);
+\fill [black] (32.76,-51.5) -- (32.58,-50.58) -- (31.85,-51.26);
+\draw (21.52,-41.46) node [left] {$"REM"$};
+\draw [black] (37.76,-53.293) arc (125.56505:-162.43495:2.25);
+\draw (41.97,-56.54) node [right] {$*$};
+\fill [black] (36.92,-55.8) -- (36.98,-56.74) -- (37.8,-56.16);
+\end{tikzpicture}
+\end{center}
+
+\end{document}
